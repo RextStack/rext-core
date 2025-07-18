@@ -1,0 +1,26 @@
+#!/bin/sh
+set -eu
+
+echo "Running cargo fmt..."
+
+if ! cargo fmt; then
+    echo >&2 "Pre-commit: formatting failed. Commit aborted."
+    exit 1
+fi
+
+echo "Running cargo clippy..."
+
+if ! cargo clippy; then
+    echo >&2 "Pre-commit: Clippy failed. Commit aborted."
+    exit 1
+fi
+
+
+echo "Running cargo test..."
+
+if ! cargo test; then
+    echo >&2 "Pre-commit: Tests failed. Commit aborted."
+    exit 1
+fi
+
+echo "cargo test passed. Proceeding with commit."

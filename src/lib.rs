@@ -7,6 +7,7 @@
 //! Status: 0%
 //!
 //! [Visit Rext](https://rextstack.org)
+//!
 
 use axum::{Router, routing::get};
 use std::net::SocketAddr;
@@ -77,9 +78,7 @@ pub async fn server_non_blocking(
         .map_err(|e| RextCoreError::BindError { address, source: e })?;
 
     // Get the actual bound address (useful when port is 0 for dynamic allocation)
-    let bound_addr = listener
-        .local_addr()
-        .map_err(|e| RextCoreError::ServerStart(e))?;
+    let bound_addr = listener.local_addr().map_err(RextCoreError::ServerStart)?;
 
     // Spawn the server in a separate task
     let server_handle = tokio::spawn(async move {
