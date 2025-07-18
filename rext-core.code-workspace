@@ -1,0 +1,67 @@
+{
+    "folders": [
+        {
+            "name": "rext-core",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "rust-analyzer.rustfmt.overrideCommand": ["cargo", "fmt", "--"],
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "[rust]": {
+            "editor.formatOnSave": true,
+            "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        },
+        "rust-analyzer.check.command": "check",
+        "rust-analyzer.cargo.buildScripts.enable": true,
+        "rust-analyzer.procMacro.enable": true,
+        "files.watcherExclude": {
+            "**/target/**": true
+        },
+        "rust-analyzer.cargo.allFeatures": true,
+        "rust-analyzer.checkOnSave.command": "check",
+        "rust-analyzer.checkOnSave.allTargets": true
+    },
+    "extensions": {
+        "recommendations": [
+            "rust-lang.rust-analyzer",
+            "vadimcn.vscode-lldb",
+            "ms-vscode.vscode-json",
+            "redhat.vscode-yaml"
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "cargo build",
+                "type": "cargo",
+                "command": "build",
+                "group": "build",
+                "problemMatcher": ["$rustc"]
+            },
+            {
+                "label": "cargo test",
+                "type": "cargo",
+                "command": "test",
+                "group": "test",
+                "problemMatcher": ["$rustc"]
+            },
+            {
+                "label": "cargo check",
+                "type": "cargo",
+                "command": "check",
+                "group": "build",
+                "problemMatcher": ["$rustc"]
+            },
+            {
+                "label": "cargo fmt",
+                "type": "cargo",
+                "command": "fmt",
+                "group": "build",
+                "problemMatcher": []
+            }
+        ]
+    }
+}
