@@ -2,6 +2,17 @@
 
 Thank you for your interest in contributing to rext-core! This document outlines the guidelines and best practices for contributing to this project.
 
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Development Setup](#development-setup)
+3. [Code Style and Quality](#code-style-and-quality)
+   - [Formatting](#formatting)
+   - [Linting](#linting)
+   - [Documentation](#documentation)
+4. [Testing Guidelines](#testing-guidelines)
+
+
 ## Prerequisites
 
 - **Rust**: Latest stable version (minimum Rust 2024 edition support)
@@ -74,6 +85,27 @@ cargo test -- --nocapture
 cargo test test_name
 ```
 
+## Git Commit Style Guide
+
+- **Header**: Contains the type, an optional scope, and a short, imperative summary.
+
+- **Body** (optional): Provides additional context, motivation, or reasoning for the change.
+
+- **Footer** (optional): Can reference issues, breaking changes, or provide sign-off and metadata.
+
+Header example:
+```text
+<type>(<scope>): <description>
+```
+
+Complete example:
+```text
+feat(auth): add JWT-based authentication
+
+Implements JWT strategy for secure token auth in the API module.
+Refs #101
+```
+
 ## Pull Request Process
 
 1. **Create a feature branch**
@@ -87,8 +119,8 @@ cargo test test_name
    - Update documentation as needed
 
 3. **Commit your changes**
+   - Follow the git commit style guide above
    - Use clear, descriptive commit messages
-   - Follow conventional commit format when possible
    - The pre-commit hook will run automatically
 
 4. **Push and create PR**
