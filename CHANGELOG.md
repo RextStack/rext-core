@@ -6,7 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-
 ## [0.1.0] - 2025-07-18
 
 ### Added
@@ -18,7 +17,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - lib.rs, core of the rext-core lib
 - A pre-commit hook for running cargo commands before commiting changes
 - A code-workspace file with some workspace support
-- A github workflow, tests and builds commits to main
+- A github workflow, tests and builds commits to main, caches assets
 - This initial release is to just jump-start the changelog and releases, nothing decent in it
 
-[unreleased]: https://github.com/RextStack/rext-core/
+### Fixed
+
+- Workspace cleanup (removed py pre-commit)
+
+[unreleased]: https://github.com/RextStack/rext-core/releases/tag/v0.1.0
