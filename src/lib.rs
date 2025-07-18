@@ -1,3 +1,13 @@
+//! # rext_core
+//!
+//! The `rext_core` crate is the library that powers Rext, the fullstack, batteries included Rust framework for developing web applications.
+//!
+//! It handles the absolute most basic requirements nearly all web apps will share, such as routing, API documentation, and the front-end.
+//!
+//! Status: 0%
+//!
+//! [Visit Rext](https://rextstack.org)
+
 use axum::{Router, routing::get};
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
