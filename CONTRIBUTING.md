@@ -11,6 +11,9 @@ Thank you for your interest in contributing to rext-core! This document outlines
    - [Linting](#linting)
    - [Documentation](#documentation)
 4. [Testing Guidelines](#testing-guidelines)
+5. [Changelog Management](#changelog-management)
+6. [Git Commit Style Guide](#git-commit-style-guide)
+7. [Pull Request Process](#pull-request-process)
 
 
 ## Prerequisites
@@ -21,10 +24,30 @@ Thank you for your interest in contributing to rext-core! This document outlines
 
 ## Development Setup
 
+### Quick Setup (Recommended)
+
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
    cd rext-core
+   ```
+
+2. **Run the bootstrap script**
+   ```bash
+   ./bootstrap.sh
+   ```
+
+   This script will:
+   - Install `git-cliff` for changelog generation
+   - Set up pre-commit hooks automatically
+
+### Manual Setup
+
+If you prefer manual setup or the bootstrap script fails:
+
+1. **Install git-cliff**
+   ```bash
+   cargo install git-cliff
    ```
 
 2. **Install pre-commit hooks**
@@ -32,8 +55,6 @@ Thank you for your interest in contributing to rext-core! This document outlines
    cp hooks/pre-commit .git/hooks/pre-commit
    chmod +x .git/hooks/pre-commit
    ```
-
-   This ensures `cargo fmt`, `cargo clippy`, and `cargo test` run automatically before each commit.
 
 3. **Build the project**
    ```bash
@@ -85,7 +106,28 @@ cargo test -- --nocapture
 cargo test test_name
 ```
 
+## Changelog Management
+
+This project manually currates the changelog and uses [git-cliff](https://git-cliff.org/) for automatic changelog generation (just for reference) based on conventional commits.
+
+### Generating Changelog
+
+To generate or update the cliff changelog:
+
+```bash
+git-cliff -o CLIFF_CHANGELOG.md
+```
+
+### Changelog Best Practices
+
+- **Conventional commits**: Follow the git commit style guide below for proper cliff changelog generation
+- **Release preparation**: Run `git-cliff` before creating releases
+- **Breaking changes**: Use `BREAKING CHANGE:` in commit footer for major version bumps
+- **Scopes**: Use meaningful scopes (e.g., `auth`, `api`, `core`) for better organization
+
 ## Git Commit Style Guide
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/) for consistent commit messages and automatic changelog generation.
 
 - **Header**: Contains the type, an optional scope, and a short, imperative summary.
 
@@ -98,12 +140,32 @@ Header example:
 <type>(<scope>): <description>
 ```
 
+### Common Commit Types
+
+- `feat`: New features (appears in changelog)
+- `fix`: Bug fixes (appears in changelog)
+- `docs`: Documentation changes
+- `style`: Code formatting, no logic changes
+- `refactor`: Code restructuring without feature changes
+- `test`: Adding or updating tests
+- `chore`: Maintenance tasks, dependencies
+
 Complete example:
 ```text
 feat(auth): add JWT-based authentication
 
 Implements JWT strategy for secure token auth in the API module.
 Refs #101
+```
+
+### Breaking Changes
+
+For breaking changes, add `BREAKING CHANGE:` in the commit footer:
+```text
+feat(api)!: redesign authentication API
+
+BREAKING CHANGE: The auth endpoints now require different parameter structure.
+Previous `POST /auth` is now `POST /auth/login` with new payload format.
 ```
 
 ## Pull Request Process
@@ -134,6 +196,8 @@ Refs #101
 - [ ] No clippy warnings (`cargo clippy`)
 - [ ] Documentation is updated if needed
 - [ ] New functionality includes tests
+- [ ] Commits follow conventional commit format
+- [ ] Changelog can be generated without errors (`git-cliff -o CLIFF_CHANGELOG.md`)
 
 ## Architecture Guidelines
 
