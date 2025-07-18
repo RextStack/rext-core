@@ -6,7 +6,7 @@ The core library required to run Rext, the fullstack, batteries included framewo
 
 There is a pre-commit hook in /hooks, please copy it to .git and make it executable, like so:
 ```bash
-cp rext-core/hooks/pre-commit rext-core/.git/hooks/pre-commit
+cp hooks/pre-commit .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
 ```
 
