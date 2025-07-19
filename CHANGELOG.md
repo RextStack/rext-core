@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - A pre-commit hook for running cargo commands before commiting changes
 - A code-workspace file with some workspace support
 - A github workflow, tests and builds commits to main, caches assets
+- git-cliff pre-commit hook
+- CLIFF_CHANGELOG.md, a git-cliff generated changelog for reference
+- A bootstrap script to bootstrap development environment quickly
+- Cargo.toml package info
 - This initial release is to just jump-start the changelog and releases, nothing decent in it
 
 ### Fixed
