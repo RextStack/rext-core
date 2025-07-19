@@ -9,7 +9,6 @@ repository = "https://github.com/RextStack/rext-core"
 documentation = "https://docs.rs/rext-core"
 readme = "README.md"
 license = "MIT"
-license-file = "LICENSE.txt"
 homepage = "rextstack.org"
 rust-version = "1.85.1"
 
