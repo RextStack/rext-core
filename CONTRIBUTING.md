@@ -70,7 +70,7 @@ If you prefer manual setup or the bootstrap script fails:
 
 ### Formatting
 - Use `cargo fmt` to format your code
-- The rext-core.workspace file will run this on save, if you're working in Visual Studio Code (or a fork of it)
+- The rext-core.code-workspace file will run this on save, if you're working in Visual Studio Code (or a fork of it)
 - The pre-commit hook will automatically run this
 
 ### Linting

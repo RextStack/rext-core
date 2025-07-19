@@ -5,8 +5,6 @@
 [![MIT](https://img.shields.io/crates/l/rext-core.svg)](./LICENSE.txt)
 [![Rust](https://github.com/RextStack/rext-core/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/RextStack/rext-core/actions/workflows/rust.yml)
 
-
-
 The core library required to run Rext, the fullstack, batteries included framework.
 
 ## What is Rext?
@@ -33,7 +31,6 @@ rext-core = "0.1.0"
 
 > **Warning**
 > This project is in early development. The API is unstable and subject to change. Not recommended for production use or demos. Only install if you are looking to contribute and test.
-> The crate has also not been uploaded to crates.io yet so this command won't work. Yet.
 
 # Usage
 
