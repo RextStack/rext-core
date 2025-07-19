@@ -59,3 +59,5 @@ When working on this project:
 - Never add new features that were not requested
 - When adding a new feature, reason if it should be core or a separate plugin
 - Follow the established 'microkernel' architecutre for core
+- Update Changelog with changes, following `Keep a Changelog` formatting
+- Write a commit message, but NEVER commit changes
