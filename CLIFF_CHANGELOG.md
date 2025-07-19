@@ -4,9 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### 🐛 Bug Fixes
+
+- *(cargo)* Update homepage URL in Cargo.toml
+
+### 🚜 Refactor
+
+- *(tests)* Moved tests
+
+### 📚 Documentation
+
+- *(cargo)* Updated Cargo.toml
+- *(license)* Renamed
+- *(changelog, readme)* Updated docs
+- *(cargo)* Removed license-file
+
+## [0.1.0] - 2025-07-18
+
 ### 🚀 Features
 
 - Updated github actions to cache assets
+- *(boostrap)* Added bootstrap script
+- *(hooks)* Updated pre-commit hook
+- *(changelog)* Added git-cliff
 
 ### 🐛 Bug Fixes
 
@@ -18,6 +38,8 @@ All notable changes to this project will be documented in this file.
 - Updated pre-commit hook instructions in README
 - Added changelog, contribution, agents
 - Added LICENSE.md
+- *(changelog)* Updated changelog
+- *(contribution,readme)* Updated docs
 
 ### 🧪 Testing
 

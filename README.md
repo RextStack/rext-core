@@ -1,5 +1,12 @@
 # Rext Core
 
+[![crates.io](https://img.shields.io/crates/v/rext-core.svg)](https://crates.io/crates/rext-core)
+[![docs.rs documentation](https://img.shields.io/docsrs/rext-core)](https://docs.rs/rext-core)
+[![MIT](https://img.shields.io/crates/l/rext-core.svg)](./LICENSE.txt)
+[![Rust](https://github.com/RextStack/rext-core/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/RextStack/rext-core/actions/workflows/rust.yml)
+
+
+
 The core library required to run Rext, the fullstack, batteries included framework.
 
 ## What is Rext?
