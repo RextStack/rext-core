@@ -25,12 +25,10 @@ fi
 
 echo "Validating changelog generation..."
 
-if ! git-cliff --dry-run > /dev/null 2>&1; then
+if ! git-cliff -o "CLIFF_CHANGELOG.md"; then
     echo >&2 "Pre-commit: git-cliff validation failed. Check your commit messages follow conventional format."
     echo >&2 "See CONTRIBUTING.md for git commit style guide."
     exit 1
 fi
-
-git-cliff -o CLIFF_CHANGELOG.md
 
 echo "All checks passed. Proceeding with commit."

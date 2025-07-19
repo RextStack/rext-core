@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - *(license)* Renamed
 - *(changelog, readme)* Updated docs
 - *(cargo)* Removed license-file
+- *(readme)* Add badges for crates.io, documentation, license, and CI
 
 ## [0.1.0] - 2025-07-18
 
