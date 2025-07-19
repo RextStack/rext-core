@@ -2,6 +2,16 @@
 name = "rext-core"
 version = "0.1.0"
 edition = "2024"
+description = "Core for Rext, batteries included fullstack Rust framework"
+keywords = ["framework","web","fullstack"]
+categories = ["web-programming","development-tools"]
+repository = "https://github.com/RextStack/rext-core"
+documentation = "https://docs.rs/rext-core"
+readme = "README.md"
+license = "MIT"
+license-file = "LICENSE.txt"
+homepage = "rextstack.org"
+rust-version = "1.85.1"
 
 [dependencies]
 axum = "0.8.4"
