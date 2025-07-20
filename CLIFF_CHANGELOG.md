@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### 🚀 Features
+
+- *(rext)* Introduce project scaffolding and destruction features
+
 ### 🐛 Bug Fixes
 
 - *(cargo)* Update homepage URL in Cargo.toml
