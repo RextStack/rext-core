@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - *(readme)* Add badges for crates.io, documentation, license, and CI
 - *(contributing, readme)* Update documentation for clarity
 - *(contributing, readme)* Update documentation for clarity
+- *(changelog)* Updated
 
 ## [0.1.0] - 2025-07-18
 
