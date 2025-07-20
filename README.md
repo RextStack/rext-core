@@ -13,6 +13,10 @@ Rext is a fullstack Rust framework in active development, aimed at providing a b
 
 This crate serves as the core of Rext that provides all the mandatory functionality and is extensible so additional rext modules can be added to rext projects as needed.
 
+## How to get started?
+
+The Rext TUI is the tool to get started with Rext, find it [here](https://github.com/RextStack/rext-tui)
+
 # Changelog
 
 Visit [CHANGELOG](CHANGELOG.md)
