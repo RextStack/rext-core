@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Updated Cargo.toml
 - Renamed the License file
 - Updated README
+- Removed the 'placeholder' logic and tests
 
 ### Fixed
 
@@ -20,6 +21,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Badges to the README
+- Added check_for_rext_app to check if a rext project exists in the current directory
+- Added scaffold_rext_app to scaffold a new rext project
+- Added destroy_rext_app to destroy a rext project
+- Added DirectoryCreation, FileWrite, AppAlreadyExists, CurrentDir, DirectoryRead, FileRemoval, DirectoryRemoval, and SafetyCheck errors
 
 ## [0.1.0] - 2025-07-18
 
