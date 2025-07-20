@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### 🚜 Refactor
 
 - *(tests)* Moved tests
+- *(pre-commit)* Update git-cliff command for changelog validation
 
 ### 📚 Documentation
 
@@ -19,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - *(changelog, readme)* Updated docs
 - *(cargo)* Removed license-file
 - *(readme)* Add badges for crates.io, documentation, license, and CI
+- *(contributing, readme)* Update documentation for clarity
 - *(contributing, readme)* Update documentation for clarity
 
 ## [0.1.0] - 2025-07-18
