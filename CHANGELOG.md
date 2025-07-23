@@ -25,6 +25,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added scaffold_rext_app to scaffold a new rext project
 - Added destroy_rext_app to destroy a rext project
 - Added DirectoryCreation, FileWrite, AppAlreadyExists, CurrentDir, DirectoryRead, FileRemoval, DirectoryRemoval, and SafetyCheck errors
+- Added SeaOrmCliGenerateEntities error
+- Added TYPES_TO_WRAP and ENTITIES_DIR constants
 
 ## [0.1.0] - 2025-07-18
 

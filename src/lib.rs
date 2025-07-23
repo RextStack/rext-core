@@ -12,6 +12,15 @@
 mod error;
 
 use crate::error::RextCoreError;
+use std::fs::{self, File};
+use std::io::{BufRead, BufReader, Write};
+use std::process::Command;
+
+/// Constant list of data types to target (easily expandable)
+pub const TYPES_TO_WRAP: [&str; 2] = ["Uuid", "DateTimeWithTimeZone"];
+
+/// Directory containing generated sea-orm entity files
+pub const ENTITIES_DIR: &str = "src/entities";
 
 /// Configuration for the server
 pub struct ServerConfig {
@@ -312,6 +321,94 @@ pub fn destroy_rext_app() -> Result<(), RextCoreError> {
     if src_dir.exists() {
         std::fs::remove_dir(&src_dir)
             .map_err(|e| RextCoreError::DirectoryRemoval(format!("src: {}", e)))?;
+    }
+
+    Ok(())
+}
+
+/// Generates the SeaORM entities with OpenAPI support
+///
+/// Adds the derive ToSchema and #[schema(value_type = String)] to unsupported data types
+///
+/// Returns a RextCoreError if an error occurs during the generation process
+pub fn generate_sea_orm_entities_with_open_api_schema() -> Result<(), RextCoreError> {
+    // run the see-orm-cli command with serde and utoipa derives
+    let output = Command::new("sea-orm-cli")
+        .args(&[
+            "generate",
+            "entity",
+            "-u",
+            "sqlite:./sqlite.db?mode=rwc",
+            "-o",
+            "src/entities",
+            "--model-extra-derives",
+            "utoipa::ToSchema",
+            "--with-serde",
+            "both",
+        ])
+        .output()
+        .map_err(RextCoreError::SeaOrmCliGenerateEntities)?;
+
+    if !output.status.success() {
+        return Err(RextCoreError::SeaOrmCliGenerateEntities(
+            std::io::Error::new(
+                std::io::ErrorKind::Other,
+                format!("sea-orm-cli command failed with status: {}", output.status),
+            ),
+        ));
+    }
+
+    // Process each .rs file in the entities directory
+    for entry in fs::read_dir(ENTITIES_DIR)? {
+        let entry = entry?;
+        let path = entry.path();
+
+        if path.is_file() && path.extension().map_or(false, |ext| ext == "rs") {
+            // Check if this is a SeaORM entity file
+            let file = File::open(&path)?;
+            let reader = BufReader::new(file);
+            let first_line = reader.lines().next().transpose()?;
+
+            if let Some(line) = first_line {
+                if !line.trim().starts_with("//! `SeaORM` Entity") {
+                    continue;
+                }
+            } else {
+                continue;
+            }
+
+            // Re-open file to process it
+            let file = File::open(&path)?;
+            let reader = BufReader::new(file);
+            let mut output_lines: Vec<String> = Vec::new();
+
+            for line_result in reader.lines() {
+                let line = line_result?;
+                let trimmed_line = line.trim_start();
+
+                // Check if the line is a public field with a target type
+                let mut add_schema = false;
+                for dtype in &TYPES_TO_WRAP {
+                    if trimmed_line.starts_with("pub ") && trimmed_line.contains(dtype) {
+                        add_schema = true;
+                        break;
+                    }
+                }
+
+                // Insert the schema attribute if matched
+                if add_schema {
+                    output_lines.push("    #[schema(value_type = String)]".to_string());
+                }
+
+                output_lines.push(line);
+            }
+
+            // Write the modified content back to the file
+            let mut file = File::create(&path)?;
+            for line in &output_lines {
+                writeln!(file, "{}", line)?;
+            }
+        }
     }
 
     Ok(())

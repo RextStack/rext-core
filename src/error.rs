@@ -27,4 +27,7 @@ pub enum RextCoreError {
 
     #[error("Safety check failed: {0}")]
     SafetyCheck(String),
+
+    #[error("Failed to execute sea-orm-cli generate entities command: {0}")]
+    SeaOrmCliGenerateEntities(std::io::Error),
 }
