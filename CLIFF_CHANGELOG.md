@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - *(rext)* Introduce project scaffolding and destruction features
+- *(sea-orm)* Implement entity generation with OpenAPI support
 
 ### 🐛 Bug Fixes
 
