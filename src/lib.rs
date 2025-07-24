@@ -20,7 +20,7 @@ use std::process::Command;
 pub const TYPES_TO_WRAP: [&str; 2] = ["Uuid", "DateTimeWithTimeZone"];
 
 /// Directory containing generated sea-orm entity files
-pub const ENTITIES_DIR: &str = "src/entities";
+pub const ENTITIES_DIR: &str = "backend/entity/models";
 
 /// Configuration for the server
 pub struct ServerConfig {
@@ -340,11 +340,12 @@ pub fn generate_sea_orm_entities_with_open_api_schema() -> Result<(), RextCoreEr
             "-u",
             "sqlite:./sqlite.db?mode=rwc",
             "-o",
-            "src/entities",
+            format!("{}", ENTITIES_DIR).as_str(),
             "--model-extra-derives",
             "utoipa::ToSchema",
             "--with-serde",
             "both",
+            "--ignore-tables jobs,workers" // These tables are ignored, they are for the job queue
         ])
         .output()
         .map_err(RextCoreError::SeaOrmCliGenerateEntities)?;

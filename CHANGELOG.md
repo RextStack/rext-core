@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - Updated the homepage URL in Cargo.toml, was missing the https://www
+- Fixed the output directory for sea-orm-cli command to be backend/entity/models (new Rext architecture)
 
 ### Added
 
@@ -27,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added DirectoryCreation, FileWrite, AppAlreadyExists, CurrentDir, DirectoryRead, FileRemoval, DirectoryRemoval, and SafetyCheck errors
 - Added SeaOrmCliGenerateEntities error
 - Added TYPES_TO_WRAP and ENTITIES_DIR constants
+- Added ignore-tables flag to sea-orm-cli command to ignore jobs and workers tables
 
 ## [0.1.0] - 2025-07-18
 
