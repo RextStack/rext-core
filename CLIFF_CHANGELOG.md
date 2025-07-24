@@ -28,7 +28,11 @@ All notable changes to this project will be documented in this file.
 - *(contributing, readme)* Update documentation for clarity
 - *(contributing, readme)* Update documentation for clarity
 - *(changelog)* Updated
+- *(changelog)* Updated
+- *(changelog)* Updated
 - *(readme)* Add getting started section with TUI link
+- *(changelog)* Updated
+- *(changelog)* Updated
 
 ## [0.1.0] - 2025-07-18
 

@@ -345,7 +345,7 @@ pub fn generate_sea_orm_entities_with_open_api_schema() -> Result<(), RextCoreEr
             "utoipa::ToSchema",
             "--with-serde",
             "both",
-            "--ignore-tables jobs,workers" // These tables are ignored, they are for the job queue
+            "--ignore-tables jobs,workers", // These tables are ignored, they are for the job queue
         ])
         .output()
         .map_err(RextCoreError::SeaOrmCliGenerateEntities)?;
