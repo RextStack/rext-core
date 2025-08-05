@@ -10,8 +10,14 @@
 //!
 
 mod error;
+mod files;
 
 use crate::error::RextCoreError;
+
+// Re-export files module types and functions for public use
+pub use crate::files::{
+    FileCreationConfig, RextFile, RextFileType, RextModule, create_rext_app, get_rext_files,
+};
 use std::fs::{self, File};
 use std::io::{BufRead, BufReader, Write};
 use std::process::Command;
@@ -80,125 +86,20 @@ pub fn check_for_rext_app() -> bool {
 pub fn scaffold_rext_app() -> Result<(), RextCoreError> {
     let current_dir = std::env::current_dir().map_err(RextCoreError::CurrentDir)?;
 
-    // Confirm a rust project does not already exist in this directory
-    // (helps prevent accidental overwriting of existing projects, including rext-core, oopsies)
-    if current_dir.join("Cargo.toml").exists() {
-        return Err(RextCoreError::AppAlreadyExists);
-    }
+    let new_app_name = current_dir
+        .file_name()
+        .and_then(|name| name.to_str())
+        .unwrap_or("my-rext-app")
+        .to_string();
 
-    // Check if rext.toml already exists
-    if current_dir.join("rext.toml").exists() {
-        return Err(RextCoreError::AppAlreadyExists);
-    }
+    // Create configuration with default settings
+    let config = FileCreationConfig {
+        app_name: new_app_name,
+        modules: vec![RextModule::RextCore],
+    };
 
-    // Create basic directory structure
-    let src_dir = current_dir.join("src");
-    let public_dir = current_dir.join("public");
-    let templates_dir = current_dir.join("templates");
-
-    // Create directories
-    std::fs::create_dir_all(&src_dir).map_err(RextCoreError::DirectoryCreation)?;
-    std::fs::create_dir_all(&public_dir).map_err(RextCoreError::DirectoryCreation)?;
-    std::fs::create_dir_all(&templates_dir).map_err(RextCoreError::DirectoryCreation)?;
-
-    // Create rext.toml configuration file
-    let rext_toml_content = r#"[app]
-name = "my-rext-app"
-version = "0.1.0"
-description = "A new Rext application"
-
-[server]
-host = "0.0.0.0"
-port = 3000
-
-[database]
-url = "sqlite://rext.db"
-
-[static]
-directory = "public"
-
-[templates]
-directory = "templates"
-"#;
-
-    let rext_toml_path = current_dir.join("rext.toml");
-    std::fs::write(&rext_toml_path, rext_toml_content)
-        .map_err(|e| RextCoreError::FileWrite(format!("rext.toml: {}", e)))?;
-
-    // Create a basic Cargo.toml file
-    let cargo_toml_content = format!(
-        r#"
-[package]
-name = "{}"
-version = "0.1.0"
-description = "A new Rext application"
-
-[dependencies]
-rext-core = "0.1.0"
-"#,
-        current_dir.to_str().unwrap()
-    );
-
-    let cargo_toml_path = current_dir.join("Cargo.toml");
-    std::fs::write(&cargo_toml_path, cargo_toml_content)
-        .map_err(|e| RextCoreError::FileWrite(format!("Cargo.toml: {}", e)))?;
-
-    // Create a basic main.rs file
-    let main_rs_content = r#"
-
-fn main() {
-    println!("Welcome to your new Rext app!");
-}
-"#;
-
-    let main_rs_path = src_dir.join("main.rs");
-    std::fs::write(&main_rs_path, main_rs_content)
-        .map_err(|e| RextCoreError::FileWrite(format!("src/main.rs: {}", e)))?;
-
-    // Create a basic index.html template
-    let index_html_content = r#"<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Rext App</title>
-</head>
-<body>
-    <h1>Welcome to Rext!</h1>
-    <p>Your fullstack Rust web application is ready.</p>
-</body>
-</html>
-"#;
-
-    let index_html_path = templates_dir.join("index.html");
-    std::fs::write(&index_html_path, index_html_content)
-        .map_err(|e| RextCoreError::FileWrite(format!("templates/index.html: {}", e)))?;
-
-    // Create a basic CSS file
-    let style_css_content = r#"body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    line-height: 1.6;
-}
-
-h1 {
-    color: #333;
-    text-align: center;
-}
-
-p {
-    color: #666;
-    text-align: center;
-}
-"#;
-
-    let style_css_path = public_dir.join("style.css");
-    std::fs::write(&style_css_path, style_css_content)
-        .map_err(|e| RextCoreError::FileWrite(format!("public/style.css: {}", e)))?;
-
-    Ok(())
+    // Use the new files module to create the application
+    create_rext_app(&current_dir, config)
 }
 
 /// Completely destroys a Rext application in the current directory

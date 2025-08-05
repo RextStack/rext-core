@@ -1,0 +1,87 @@
+# Docker Compose configuration for Rext Demo Project
+# Provides both development and production deployment options
+
+services:
+  # Production deployment - single container with frontend and backend
+  rext-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=sqlite:/app/data/sqlite.db?mode=rwc
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+      - RUST_LOG=${RUST_LOG:-info}
+      - CREATE_ADMIN_USER=${CREATE_ADMIN_USER:-true}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@localhost.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - CREATE_DEFAULT_ROLES=${CREATE_DEFAULT_ROLES:-true}
+      - DEFAULT_ROLES=${DEFAULT_ROLES:-admin,user}
+      - ALLOWED_ORIGIN=${ALLOWED_ORIGIN:-http://localhost:3000}
+    volumes:
+      # Persist database data
+      - rext_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Development services (optional - use profiles to enable)
+  rext-dev-backend:
+    profiles: ["dev"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3000:3000"
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=sqlite:/app/data/sqlite.db?mode=rwc
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-key}
+      - RUST_LOG=${RUST_LOG:-debug}
+      - CREATE_ADMIN_USER=${CREATE_ADMIN_USER:-true}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@localhost.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - CREATE_DEFAULT_ROLES=${CREATE_DEFAULT_ROLES:-true}
+      - DEFAULT_ROLES=${DEFAULT_ROLES:-admin,user}
+    volumes:
+      - .:/app
+      - rext_data:/app/data
+      - rust_cache:/app/target
+    working_dir: /app
+    command: cargo watch -x run
+
+  rext-dev-frontend:
+    profiles: ["dev"]
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.frontend-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - node_modules_cache:/app/node_modules
+    working_dir: /app
+    command: npm run dev
+    depends_on:
+      - rext-dev-backend
+
+volumes:
+  rext_data:
+    driver: local
+  rust_cache:
+    driver: local
+  node_modules_cache:
+    driver: local
+
+# Networks (optional for more complex setups)
+networks:
+  default:
+    name: rext-network

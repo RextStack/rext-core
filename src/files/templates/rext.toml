@@ -1,0 +1,17 @@
+[app]
+name = "my-rext-app"
+version = "0.1.0"
+description = "A new Rext application"
+
+[server]
+host = "0.0.0.0"
+port = 3000
+
+[database]
+url = "sqlite://rext.db"
+
+[static]
+directory = "public"
+
+[templates]
+directory = "templates"

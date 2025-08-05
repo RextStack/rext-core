@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["node", "jsdom"],
+
+    // Path mappings for all environments
+    "paths": {
+      "@/appearance/*": ["./src/appearance/*"],
+      "@/bridge/*": ["./src/bridge/*"],
+      "@/components/*": ["./src/appearance/components/*"],
+      "@/views/*": ["./src/appearance/views/*"],
+      "@/pages/*": ["./src/appearance/pages/*"],
+      "@/layouts/*": ["./src/appearance/layouts/*"],
+      "@/styles/*": ["./src/appearance/styles/*"],
+      "@/api/*": ["./src/bridge/api/*"],
+      "@/stores/*": ["./src/bridge/stores/*"],
+      "@/types/*": ["./src/bridge/types/*"],
+      "@/router/*": ["./src/bridge/router/*"],
+      "@/*": ["./src/*"]
+    },
+
+    // Build info files
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo"
+  },
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "vite.config.*",
+    "vitest.config.*",
+    "playwright.config.*",
+    "eslint.config.*"
+  ],
+  "exclude": [
+    "src/**/__tests__/*",
+    "node_modules",
+    "dist",
+    "dist-ssr",
+    "coverage"
+  ]
+}
