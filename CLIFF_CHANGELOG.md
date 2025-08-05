@@ -34,6 +34,11 @@ All notable changes to this project will be documented in this file.
 - *(changelog)* Updated
 - *(changelog)* Updated
 
+### ⚙️ Miscellaneous Tasks
+
+- *(changelog)* Update for sea-orm-cli command enhancements
+- *(changelog)* Consolidate changelog updates and improve formatting
+
 ## [0.1.0] - 2025-07-18
 
 ### 🚀 Features
