@@ -201,7 +201,9 @@ fn load_template_content(file_type: &RextFileType) -> String {
         RextFileType::TsConfigTs => include_str!("templates/frontend/tsconfig.json").to_string(),
         // Migration Files
         RextFileType::MigrationLibRs => include_str!("templates/migration/src/lib.rs").to_string(),
-        RextFileType::MigrationMainRs => include_str!("templates/migration/src/main.rs").to_string(),
+        RextFileType::MigrationMainRs => {
+            include_str!("templates/migration/src/main.rs").to_string()
+        }
         RextFileType::InitialMigrationRs => {
             include_str!("templates/migration/src/initial_migration.rs").to_string()
         }
