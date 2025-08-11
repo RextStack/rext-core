@@ -3,14 +3,12 @@ use sea_orm_migration::{prelude::*, schema::*};
 #[derive(DeriveMigrationName)]
 pub struct Migration;
 
-
-
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-
         // Create the users table
-        manager.create_table(
+        manager
+            .create_table(
                 Table::create()
                     .table(Users::Table)
                     .col(ColumnDef::new(Users::Id).uuid().not_null().primary_key())
@@ -26,25 +24,41 @@ impl MigrationTrait for Migration {
                             .timestamp_with_time_zone()
                             .default(Expr::current_timestamp()),
                     )
-                    .col(ColumnDef::new(Users::LastLogin).timestamp_with_time_zone().null())
+                    .col(
+                        ColumnDef::new(Users::LastLogin)
+                            .timestamp_with_time_zone()
+                            .null(),
+                    )
                     .col(ColumnDef::new(Users::RoleId).integer().null())
-                    .col(ColumnDef::new(Users::EmailVerified).boolean().not_null().default(false))
+                    .col(
+                        ColumnDef::new(Users::EmailVerified)
+                            .boolean()
+                            .not_null()
+                            .default(false),
+                    )
                     .foreign_key(
                         ForeignKey::create()
                             .name("fk_users_role_id")
                             .from(Users::Table, Users::RoleId)
                             .to(Roles::Table, Roles::Id)
                             .on_delete(ForeignKeyAction::SetNull)
-                            .on_update(ForeignKeyAction::Cascade)
+                            .on_update(ForeignKeyAction::Cascade),
                     )
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            // Create the audit logs table
-            manager.create_table(
+        // Create the audit logs table
+        manager
+            .create_table(
                 Table::create()
                     .table(AuditLogs::Table)
-                    .col(ColumnDef::new(AuditLogs::Id).uuid().not_null().primary_key())
+                    .col(
+                        ColumnDef::new(AuditLogs::Id)
+                            .uuid()
+                            .not_null()
+                            .primary_key(),
+                    )
                     .col(
                         ColumnDef::new(AuditLogs::Timestamp)
                             .timestamp_with_time_zone()
@@ -68,10 +82,12 @@ impl MigrationTrait for Migration {
                             .on_delete(ForeignKeyAction::SetNull),
                     )
                     .to_owned(),
-                ).await?;
+            )
+            .await?;
 
-            // Create the roles table
-            manager.create_table(
+        // Create the roles table
+        manager
+            .create_table(
                 Table::create()
                     .table(Roles::Table)
                     .if_not_exists()
@@ -88,44 +104,48 @@ impl MigrationTrait for Migration {
                             .default(Expr::current_timestamp()),
                     )
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            // Create the user sessions table
-            manager.create_table(
+        // Create the user sessions table
+        manager
+            .create_table(
                 Table::create()
                     .table(UserSessions::Table)
-                    .col(ColumnDef::new(UserSessions::Id).uuid().not_null().primary_key())
                     .col(
-                        ColumnDef::new(UserSessions::UserId)
+                        ColumnDef::new(UserSessions::Id)
                             .uuid()
                             .not_null()
+                            .primary_key(),
                     )
-                    .col(ColumnDef::new(UserSessions::SessionToken).string().not_null().unique_key())
-                    .col(ColumnDef::new(UserSessions::UserAgent).text().null())
+                    .col(ColumnDef::new(UserSessions::UserId).uuid().not_null())
                     .col(
-                        ColumnDef::new(UserSessions::IpAddress)
+                        ColumnDef::new(UserSessions::SessionToken)
                             .string()
-                            .null()
+                            .not_null()
+                            .unique_key(),
                     )
+                    .col(ColumnDef::new(UserSessions::UserAgent).text().null())
+                    .col(ColumnDef::new(UserSessions::IpAddress).string().null())
                     .col(
                         ColumnDef::new(UserSessions::CreatedAt)
                             .timestamp_with_time_zone()
-                            .default(Expr::current_timestamp())
+                            .default(Expr::current_timestamp()),
                     )
                     .col(
                         ColumnDef::new(UserSessions::LastActivity)
                             .timestamp_with_time_zone()
-                            .default(Expr::current_timestamp())
+                            .default(Expr::current_timestamp()),
                     )
                     .col(
                         ColumnDef::new(UserSessions::ExpiresAt)
                             .timestamp_with_time_zone()
-                            .not_null()
+                            .not_null(),
                     )
                     .col(
                         ColumnDef::new(UserSessions::IsActive)
                             .boolean()
-                            .default(true)
+                            .default(true),
                     )
                     .foreign_key(
                         ForeignKey::create()
@@ -133,13 +153,15 @@ impl MigrationTrait for Migration {
                             .from(UserSessions::Table, UserSessions::UserId)
                             .to(Users::Table, Users::Id)
                             .on_delete(ForeignKeyAction::Cascade)
-                            .on_update(ForeignKeyAction::Cascade)
+                            .on_update(ForeignKeyAction::Cascade),
                     )
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            // Create table database metrics
-            manager.create_table(
+        // Create table database metrics
+        manager
+            .create_table(
                 Table::create()
                     .table(DatabaseMetrics::Table)
                     .if_not_exists()
@@ -149,76 +171,116 @@ impl MigrationTrait for Migration {
                             .not_null()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(DatabaseMetrics::QueryHash).string().not_null())
-                    .col(ColumnDef::new(DatabaseMetrics::QueryType).string().not_null())
+                    .col(
+                        ColumnDef::new(DatabaseMetrics::QueryHash)
+                            .string()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(DatabaseMetrics::QueryType)
+                            .string()
+                            .not_null(),
+                    )
                     .col(ColumnDef::new(DatabaseMetrics::TableName).string().null())
-                    .col(ColumnDef::new(DatabaseMetrics::ExecutionTimeMs).big_integer().not_null())
-                    .col(ColumnDef::new(DatabaseMetrics::RowsAffected).big_integer().null())
+                    .col(
+                        ColumnDef::new(DatabaseMetrics::ExecutionTimeMs)
+                            .big_integer()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(DatabaseMetrics::RowsAffected)
+                            .big_integer()
+                            .null(),
+                    )
                     .col(ColumnDef::new(DatabaseMetrics::ErrorMessage).text().null())
-                    .col(ColumnDef::new(DatabaseMetrics::Timestamp).timestamp_with_time_zone().not_null())
-                    .col(ColumnDef::new(DatabaseMetrics::CreatedAt).timestamp_with_time_zone().not_null())
+                    .col(
+                        ColumnDef::new(DatabaseMetrics::Timestamp)
+                            .timestamp_with_time_zone()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(DatabaseMetrics::CreatedAt)
+                            .timestamp_with_time_zone()
+                            .not_null(),
+                    )
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            // create indexes
-            manager.create_index(
+        // create indexes
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_user_sessions_user_id")
                     .table(UserSessions::Table)
                     .col(UserSessions::UserId)
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_user_sessions_token")
                     .table(UserSessions::Table)
                     .col(UserSessions::SessionToken)
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_user_sessions_active")
                     .table(UserSessions::Table)
                     .col(UserSessions::IsActive)
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_user_sessions_expires")
                     .table(UserSessions::Table)
                     .col(UserSessions::ExpiresAt)
                     .to_owned(),
-            ).await?;   
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_user_sessions_user_active")
                     .table(UserSessions::Table)
                     .col(UserSessions::UserId)
                     .col(UserSessions::IsActive)
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_database_metrics_timestamp")
                     .table(DatabaseMetrics::Table)
                     .col(DatabaseMetrics::Timestamp)
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_database_metrics_query_type")
                     .table(DatabaseMetrics::Table)
                     .col(DatabaseMetrics::QueryType)
                     .to_owned(),
-            ).await?;
+            )
+            .await?;
 
-            manager.create_index(
+        manager
+            .create_index(
                 Index::create()
                     .name("idx_database_metrics_table_name")
                     .table(DatabaseMetrics::Table)
@@ -229,11 +291,21 @@ impl MigrationTrait for Migration {
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        manager.drop_table(Table::drop().table(Users::Table).to_owned()).await?;
-        manager.drop_table(Table::drop().table(AuditLogs::Table).to_owned()).await?;
-        manager.drop_table(Table::drop().table(Roles::Table).to_owned()).await?;
-        manager.drop_table(Table::drop().table(UserSessions::Table).to_owned()).await?;
-        manager.drop_table(Table::drop().table(DatabaseMetrics::Table).to_owned()).await
+        manager
+            .drop_table(Table::drop().table(Users::Table).to_owned())
+            .await?;
+        manager
+            .drop_table(Table::drop().table(AuditLogs::Table).to_owned())
+            .await?;
+        manager
+            .drop_table(Table::drop().table(Roles::Table).to_owned())
+            .await?;
+        manager
+            .drop_table(Table::drop().table(UserSessions::Table).to_owned())
+            .await?;
+        manager
+            .drop_table(Table::drop().table(DatabaseMetrics::Table).to_owned())
+            .await
     }
 }
 
@@ -265,7 +337,6 @@ enum AuditLogs {
     ResponseBody,
     ErrorMessage,
 }
-
 
 #[derive(DeriveIden)]
 enum Roles {
