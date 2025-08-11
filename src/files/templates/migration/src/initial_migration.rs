@@ -93,7 +93,7 @@ impl MigrationTrait for Migration {
                     .if_not_exists()
                     .col(pk_auto(Roles::Id))
                     .col(string(Roles::Name).not_null().unique_key())
-                    .col(string(Roles::Description))
+                    .col(string(Roles::Description).null())
                     .col(string(Roles::Permissions).not_null()) // JSON string of permissions
                     .col(
                         timestamp_with_time_zone(Roles::CreatedAt)

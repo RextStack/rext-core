@@ -40,6 +40,18 @@ rext-core = "0.1.0"
 
 > **Not Available**
 
+# Current Progress
+
+- Working on the app scaffolding. This is setting up the initial directories and files, making sure dependencies are installed, everything compiles, and migrations are able to run.
+
+- Current steps are: init project with TUI, run migrations, then generate entities with TUI, then cargo check/run. This is obviously not ergonomic at all, after the files are scaffolded, we'll automate these next two steps. Waiting till the project actually compiles though.
+**Note:** Right now, things almost compile, but the generated sea-orm-cli models are coming out different compared to the example project. This is a bit odd.
+
+- After this, will need to migrate the modules that are technically rext-core lib modules into rext-core and import them into the scaffolded app. Right now, for simplicity, we're just trying to scaffold the app that was created in [Example rext app](https://github.com/LostRhapsody/example_rext_project). Once that can be built, compiled, and runs perfectly out-of-the-box with no config, we'll work on moving it's modules into rext-core so they don't fill up a user's code base.
+**Note:** Still on the fence as to what a blank-slate Rext app should look like. Either a hello world, empty canvas with a bunch of modules and libs installed behind the scenes, or a blank canvas that can be made much larger by including pre-built modules for Auth and things, but not as behind-the-scenes library, instead as code-gen, so the code is generated and placed in your project, and after that you're responsible for it and can expand/remove it as needed. Not sure. One is ideal for learning, the other for library maintenance and upgrading.
+
+- After the module migrations are done, we'll add some example files to the scaffold, i.e. "hello world"
+
 # Contribution Guidelines
 
 Visit [CONTRIBUTING](CONTRIBUTING.md)

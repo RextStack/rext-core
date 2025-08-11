@@ -35,24 +35,81 @@ pub enum RextFileType {
     BridgeModRs,
     /// bridge/handlers source file
     HandlersModRs,
+    /// Handlers
+    HanlderWebsocketRs,
+    HandlersAdminRs,
+    HandlersRolesRs,
+    HandlersAuthRs,
+
     /// bridge/middleware source file
     MiddlewareModRs,
+    /// Middleware
+    MiddlewareAuthRs,
+    MiddlewareAdminRs,
+    MiddlewareLoggingRs,
+
     /// bridge/routes source file
     RoutesModRs,
+    /// Routes
+    RoutesAuthRs,
+    RoutesAdminRs,
+
     /// bridge/types source file
     BridgeTypesModRs,
+    /// bridge/types/admin
+    BridgeTypesAdminRs,
+    /// bridge/types/auth
+    BridgeTypesAuthRs,
+    /// bridge/types/logging
+    BridgeTypesLoggingRs,
+
     /// control layer source file
     ControlModRs,
+
     /// control/services source file
     ServicesModRs,
+    /// Services
+    ServerConfigRs,
+    StartupRs,
+    UserServiceRs,
+    DatabaseServiceRs,
+    AdminServiceRs,
+    TokenServiceRs,
+    SessionServiceRs,
+    AuthServiceRs,
+    PermissionServiceRs,
+    SystemMonitorServiceRs,
+
     /// domain layer source file
     DomainModRs,
+    DomainPermissionsRs,
+    DomainUserRs,
+    DomainValidationRs,
+    DomainAuthRs,
+
     /// entity layer source file
     EntityModRs,
+
     /// infrastructure layer source file
     InfrastructureModRs,
+    /// infrastructure modules
+    InfrastructureJobQueueRs,
+    InfrastructureLoggingRs,
+    InfrastructureSchedulerRs,
+    InfrastructureWebsocketRs,
+    InfrastructureAppErrorRs,
+    InfrastructureDatabaseRs,
+    InfrastructureEmailRs,
+    InfrastructureQueryPerformanceRs,
+    InfrastructureServerRs,
+    InfrastructureCorsRs,
+    InfrastructureOpenApiRs,
+    InfrastructureJwtClaimsRs,
+
     /// infrastructure/macros source file
     MacrosModRs,
+    /// Macros
+    PermissionMacroRs,
 
     /// Frontend Files
     /// front end dependencies file
@@ -165,29 +222,158 @@ fn load_template_content(file_type: &RextFileType) -> String {
         // Backend Files
         RextFileType::MainRs => include_str!("templates/backend/main.rs").to_string(),
         RextFileType::BridgeModRs => include_str!("templates/backend/bridge/mod.rs").to_string(),
+
+        // Handlers
         RextFileType::HandlersModRs => {
             include_str!("templates/backend/bridge/handlers/mod.rs").to_string()
         }
+        RextFileType::HanlderWebsocketRs => {
+            include_str!("templates/backend/bridge/handlers/websocket.rs").to_string()
+        }
+        RextFileType::HandlersAdminRs => {
+            include_str!("templates/backend/bridge/handlers/admin.rs").to_string()
+        }
+        RextFileType::HandlersRolesRs => {
+            include_str!("templates/backend/bridge/handlers/roles.rs").to_string()
+        }
+        RextFileType::HandlersAuthRs => {
+            include_str!("templates/backend/bridge/handlers/auth.rs").to_string()
+        }
+
+        // Middleware
         RextFileType::MiddlewareModRs => {
             include_str!("templates/backend/bridge/middleware/mod.rs").to_string()
         }
+        RextFileType::MiddlewareAuthRs => {
+            include_str!("templates/backend/bridge/middleware/auth.rs").to_string()
+        }
+        RextFileType::MiddlewareAdminRs => {
+            include_str!("templates/backend/bridge/middleware/admin.rs").to_string()
+        }
+        RextFileType::MiddlewareLoggingRs => {
+            include_str!("templates/backend/bridge/middleware/logging.rs").to_string()
+        }
+
+        // Routes
         RextFileType::RoutesModRs => {
             include_str!("templates/backend/bridge/routes/mod.rs").to_string()
         }
+        RextFileType::RoutesAuthRs => {
+            include_str!("templates/backend/bridge/routes/auth.rs").to_string()
+        }
+        RextFileType::RoutesAdminRs => {
+            include_str!("templates/backend/bridge/routes/admin.rs").to_string()
+        }
+
+        // Types
         RextFileType::BridgeTypesModRs => {
             include_str!("templates/backend/bridge/types/mod.rs").to_string()
         }
+        RextFileType::BridgeTypesAdminRs => {
+            include_str!("templates/backend/bridge/types/admin.rs").to_string()
+        }
+        RextFileType::BridgeTypesAuthRs => {
+            include_str!("templates/backend/bridge/types/auth.rs").to_string()
+        }
+        RextFileType::BridgeTypesLoggingRs => {
+            include_str!("templates/backend/bridge/types/logging.rs").to_string()
+        }
+
         RextFileType::ControlModRs => include_str!("templates/backend/control/mod.rs").to_string(),
+
+        // Services
         RextFileType::ServicesModRs => {
             include_str!("templates/backend/control/services/mod.rs").to_string()
         }
+        RextFileType::ServerConfigRs => {
+            include_str!("templates/backend/control/services/server_config.rs").to_string()
+        }
+        RextFileType::StartupRs => {
+            include_str!("templates/backend/control/services/startup.rs").to_string()
+        }
+        RextFileType::UserServiceRs => {
+            include_str!("templates/backend/control/services/user_service.rs").to_string()
+        }
+        RextFileType::DatabaseServiceRs => {
+            include_str!("templates/backend/control/services/database_service.rs").to_string()
+        }
+        RextFileType::AdminServiceRs => {
+            include_str!("templates/backend/control/services/admin_service.rs").to_string()
+        }
+        RextFileType::TokenServiceRs => {
+            include_str!("templates/backend/control/services/token_service.rs").to_string()
+        }
+        RextFileType::AuthServiceRs => {
+            include_str!("templates/backend/control/services/auth_service.rs").to_string()
+        }
+        RextFileType::SessionServiceRs => {
+            include_str!("templates/backend/control/services/session_service.rs").to_string()
+        }
+        RextFileType::PermissionServiceRs => {
+            include_str!("templates/backend/control/services/permission_service.rs").to_string()
+        }
+        RextFileType::SystemMonitorServiceRs => {
+            include_str!("templates/backend/control/services/system_monitor.rs").to_string()
+        }
+        // Domain
         RextFileType::DomainModRs => include_str!("templates/backend/domain/mod.rs").to_string(),
+        RextFileType::DomainPermissionsRs => {
+            include_str!("templates/backend/domain/permissions.rs").to_string()
+        }
+        RextFileType::DomainUserRs => include_str!("templates/backend/domain/user.rs").to_string(),
+        RextFileType::DomainValidationRs => {
+            include_str!("templates/backend/domain/validation.rs").to_string()
+        }
+        RextFileType::DomainAuthRs => include_str!("templates/backend/domain/auth.rs").to_string(),
+
         RextFileType::EntityModRs => include_str!("templates/backend/entity/mod.rs").to_string(),
+
+        // Infrastructure
         RextFileType::InfrastructureModRs => {
             include_str!("templates/backend/infrastructure/mod.rs").to_string()
         }
+        RextFileType::InfrastructureJobQueueRs => {
+            include_str!("templates/backend/infrastructure/job_queue.rs").to_string()
+        }
+        RextFileType::InfrastructureLoggingRs => {
+            include_str!("templates/backend/infrastructure/logging.rs").to_string()
+        }
+        RextFileType::InfrastructureSchedulerRs => {
+            include_str!("templates/backend/infrastructure/scheduler.rs").to_string()
+        }
+        RextFileType::InfrastructureWebsocketRs => {
+            include_str!("templates/backend/infrastructure/websocket.rs").to_string()
+        }
+        RextFileType::InfrastructureAppErrorRs => {
+            include_str!("templates/backend/infrastructure/app_error.rs").to_string()
+        }
+        RextFileType::InfrastructureDatabaseRs => {
+            include_str!("templates/backend/infrastructure/database.rs").to_string()
+        }
+        RextFileType::InfrastructureEmailRs => {
+            include_str!("templates/backend/infrastructure/email.rs").to_string()
+        }
+        RextFileType::InfrastructureQueryPerformanceRs => {
+            include_str!("templates/backend/infrastructure/query_performance.rs").to_string()
+        }
+        RextFileType::InfrastructureServerRs => {
+            include_str!("templates/backend/infrastructure/server.rs").to_string()
+        }
+        RextFileType::InfrastructureCorsRs => {
+            include_str!("templates/backend/infrastructure/cors.rs").to_string()
+        }
+        RextFileType::InfrastructureOpenApiRs => {
+            include_str!("templates/backend/infrastructure/openapi.rs").to_string()
+        }
+        RextFileType::InfrastructureJwtClaimsRs => {
+            include_str!("templates/backend/infrastructure/jwt_claims.rs").to_string()
+        }
+        // Macors
         RextFileType::MacrosModRs => {
             include_str!("templates/backend/infrastructure/macros/mod.rs").to_string()
+        }
+        RextFileType::PermissionMacroRs => {
+            include_str!("templates/backend/infrastructure/macros/permission_macro.rs").to_string()
         }
         // Frontend Files
         RextFileType::PackageJson => include_str!("templates/frontend/package.json").to_string(),
@@ -303,6 +489,7 @@ pub fn get_rext_files(config: &FileCreationConfig) -> Vec<RextFile> {
             RextModule::RextCore,
             true,
         ),
+        // Handlers
         (
             RextFileType::HandlersModRs,
             "mod.rs",
@@ -311,6 +498,35 @@ pub fn get_rext_files(config: &FileCreationConfig) -> Vec<RextFile> {
             true,
         ),
         (
+            RextFileType::HanlderWebsocketRs,
+            "websocket.rs",
+            PathBuf::from("backend/bridge/handlers"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::HandlersAdminRs,
+            "admin.rs",
+            PathBuf::from("backend/bridge/handlers"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::HandlersRolesRs,
+            "roles.rs",
+            PathBuf::from("backend/bridge/handlers"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::HandlersAuthRs,
+            "auth.rs",
+            PathBuf::from("backend/bridge/handlers"),
+            RextModule::RextCore,
+            true,
+        ),
+        // Middleware
+        (
             RextFileType::MiddlewareModRs,
             "mod.rs",
             PathBuf::from("backend/bridge/middleware"),
@@ -318,8 +534,44 @@ pub fn get_rext_files(config: &FileCreationConfig) -> Vec<RextFile> {
             true,
         ),
         (
+            RextFileType::MiddlewareAuthRs,
+            "auth.rs",
+            PathBuf::from("backend/bridge/middleware"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::MiddlewareAdminRs,
+            "admin.rs",
+            PathBuf::from("backend/bridge/middleware"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::MiddlewareLoggingRs,
+            "logging.rs",
+            PathBuf::from("backend/bridge/middleware"),
+            RextModule::RextCore,
+            true,
+        ),
+        // Routes
+        (
             RextFileType::RoutesModRs,
             "mod.rs",
+            PathBuf::from("backend/bridge/routes"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::RoutesAdminRs,
+            "admin.rs",
+            PathBuf::from("backend/bridge/routes"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::RoutesAuthRs,
+            "auth.rs",
             PathBuf::from("backend/bridge/routes"),
             RextModule::RextCore,
             true,
@@ -332,12 +584,34 @@ pub fn get_rext_files(config: &FileCreationConfig) -> Vec<RextFile> {
             true,
         ),
         (
+            RextFileType::BridgeTypesAdminRs,
+            "admin.rs",
+            PathBuf::from("backend/bridge/types"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::BridgeTypesAuthRs,
+            "auth.rs",
+            PathBuf::from("backend/bridge/types"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::BridgeTypesLoggingRs,
+            "logging.rs",
+            PathBuf::from("backend/bridge/types"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
             RextFileType::ControlModRs,
             "mod.rs",
             PathBuf::from("backend/control"),
             RextModule::RextCore,
             true,
         ),
+        // Services
         (
             RextFileType::ServicesModRs,
             "mod.rs",
@@ -346,8 +620,106 @@ pub fn get_rext_files(config: &FileCreationConfig) -> Vec<RextFile> {
             true,
         ),
         (
+            RextFileType::ServerConfigRs,
+            "server_config.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::StartupRs,
+            "startup.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::UserServiceRs,
+            "user_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::DatabaseServiceRs,
+            "database_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::AdminServiceRs,
+            "admin_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::TokenServiceRs,
+            "token_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::SessionServiceRs,
+            "session_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::AuthServiceRs,
+            "auth_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::PermissionServiceRs,
+            "permission_service.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::SystemMonitorServiceRs,
+            "system_monitor.rs",
+            PathBuf::from("backend/control/services"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
             RextFileType::DomainModRs,
             "mod.rs",
+            PathBuf::from("backend/domain"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::DomainPermissionsRs,
+            "permissions.rs",
+            PathBuf::from("backend/domain"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::DomainUserRs,
+            "user.rs",
+            PathBuf::from("backend/domain"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::DomainValidationRs,
+            "validation.rs",
+            PathBuf::from("backend/domain"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::DomainAuthRs,
+            "auth.rs",
             PathBuf::from("backend/domain"),
             RextModule::RextCore,
             true,
@@ -367,8 +739,99 @@ pub fn get_rext_files(config: &FileCreationConfig) -> Vec<RextFile> {
             true,
         ),
         (
+            RextFileType::InfrastructureJobQueueRs,
+            "job_queue.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureLoggingRs,
+            "logging.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureSchedulerRs,
+            "scheduler.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureWebsocketRs,
+            "websocket.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureAppErrorRs,
+            "app_error.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureEmailRs,
+            "email.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureDatabaseRs,
+            "database.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureQueryPerformanceRs,
+            "query_performance.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureServerRs,
+            "server.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureCorsRs,
+            "cors.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureOpenApiRs,
+            "openapi.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::InfrastructureJwtClaimsRs,
+            "jwt_claims.rs",
+            PathBuf::from("backend/infrastructure"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
             RextFileType::MacrosModRs,
             "mod.rs",
+            PathBuf::from("backend/infrastructure/macros"),
+            RextModule::RextCore,
+            true,
+        ),
+        (
+            RextFileType::PermissionMacroRs,
+            "permission_macro.rs",
             PathBuf::from("backend/infrastructure/macros"),
             RextModule::RextCore,
             true,

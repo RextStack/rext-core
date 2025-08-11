@@ -108,122 +108,6 @@ pub fn scaffold_rext_app() -> Result<(), RextCoreError> {
 ///
 /// Returns an error if there's an I/O error during destruction.
 pub fn destroy_rext_app() -> Result<(), RextCoreError> {
-    let current_dir = std::env::current_dir().map_err(RextCoreError::CurrentDir)?;
-
-    // Files and directories that scaffold_rext_app creates
-    let rext_toml_path = current_dir.join("rext.toml");
-    let cargo_toml_path = current_dir.join("Cargo.toml");
-    let src_dir = current_dir.join("src");
-    let public_dir = current_dir.join("public");
-    let templates_dir = current_dir.join("templates");
-    let main_rs_path = src_dir.join("main.rs");
-    let index_html_path = templates_dir.join("index.html");
-    let style_css_path = public_dir.join("style.css");
-
-    // Safety check: Verify that directories only contain expected files
-
-    // Check src/ directory
-    if src_dir.exists() {
-        let src_entries: Result<Vec<_>, _> = std::fs::read_dir(&src_dir)
-            .map_err(RextCoreError::DirectoryRead)?
-            .collect();
-        let src_entries = src_entries.map_err(RextCoreError::DirectoryRead)?;
-
-        if src_entries.len() != 1
-            || !src_entries.iter().any(|entry| {
-                entry.file_name() == "main.rs"
-                    && entry.file_type().map(|ft| ft.is_file()).unwrap_or(false)
-            })
-        {
-            return Err(RextCoreError::SafetyCheck(
-                "src directory contains unexpected files".to_string(),
-            ));
-        }
-    }
-
-    // Check public/ directory
-    if public_dir.exists() {
-        let public_entries: Result<Vec<_>, _> = std::fs::read_dir(&public_dir)
-            .map_err(RextCoreError::DirectoryRead)?
-            .collect();
-        let public_entries = public_entries.map_err(RextCoreError::DirectoryRead)?;
-
-        if public_entries.len() != 1
-            || !public_entries.iter().any(|entry| {
-                entry.file_name() == "style.css"
-                    && entry.file_type().map(|ft| ft.is_file()).unwrap_or(false)
-            })
-        {
-            return Err(RextCoreError::SafetyCheck(
-                "public directory contains unexpected files".to_string(),
-            ));
-        }
-    }
-
-    // Check templates/ directory
-    if templates_dir.exists() {
-        let templates_entries: Result<Vec<_>, _> = std::fs::read_dir(&templates_dir)
-            .map_err(RextCoreError::DirectoryRead)?
-            .collect();
-        let templates_entries = templates_entries.map_err(RextCoreError::DirectoryRead)?;
-
-        if templates_entries.len() != 1
-            || !templates_entries.iter().any(|entry| {
-                entry.file_name() == "index.html"
-                    && entry.file_type().map(|ft| ft.is_file()).unwrap_or(false)
-            })
-        {
-            return Err(RextCoreError::SafetyCheck(
-                "templates directory contains unexpected files".to_string(),
-            ));
-        }
-    }
-
-    // If we've reached here, all directories contain only expected files
-    // Now remove all files and directories in reverse order of creation
-
-    // Remove files first
-    if style_css_path.exists() {
-        std::fs::remove_file(&style_css_path)
-            .map_err(|e| RextCoreError::FileRemoval(format!("public/style.css: {}", e)))?;
-    }
-
-    if index_html_path.exists() {
-        std::fs::remove_file(&index_html_path)
-            .map_err(|e| RextCoreError::FileRemoval(format!("templates/index.html: {}", e)))?;
-    }
-
-    if main_rs_path.exists() {
-        std::fs::remove_file(&main_rs_path)
-            .map_err(|e| RextCoreError::FileRemoval(format!("src/main.rs: {}", e)))?;
-    }
-
-    if cargo_toml_path.exists() {
-        std::fs::remove_file(&cargo_toml_path)
-            .map_err(|e| RextCoreError::FileRemoval(format!("Cargo.toml: {}", e)))?;
-    }
-
-    if rext_toml_path.exists() {
-        std::fs::remove_file(&rext_toml_path)
-            .map_err(|e| RextCoreError::FileRemoval(format!("rext.toml: {}", e)))?;
-    }
-
-    // Remove directories (they should now be empty)
-    if templates_dir.exists() {
-        std::fs::remove_dir(&templates_dir)
-            .map_err(|e| RextCoreError::DirectoryRemoval(format!("templates: {}", e)))?;
-    }
-
-    if public_dir.exists() {
-        std::fs::remove_dir(&public_dir)
-            .map_err(|e| RextCoreError::DirectoryRemoval(format!("public: {}", e)))?;
-    }
-
-    if src_dir.exists() {
-        std::fs::remove_dir(&src_dir)
-            .map_err(|e| RextCoreError::DirectoryRemoval(format!("src: {}", e)))?;
-    }
-
     Ok(())
 }
 
@@ -246,7 +130,6 @@ pub fn generate_sea_orm_entities_with_open_api_schema() -> Result<(), RextCoreEr
             "utoipa::ToSchema",
             "--with-serde",
             "both",
-            "--ignore-tables jobs,workers", // These tables are ignored, they are for the job queue
         ])
         .output()
         .map_err(RextCoreError::SeaOrmCliGenerateEntities)?;
